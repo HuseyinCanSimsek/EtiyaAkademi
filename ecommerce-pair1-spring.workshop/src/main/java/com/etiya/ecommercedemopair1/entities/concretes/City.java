@@ -22,12 +22,11 @@ public class City {
     @Column(name="name")
     private String name;
 
-    @Column(name="plate_number",nullable = true)
+    @Column(name="plate_number")
     private int plateNumber;
 
-    @OneToOne(mappedBy = "city")
-    @JsonBackReference
-    private Address address;
+
+
 
 
 

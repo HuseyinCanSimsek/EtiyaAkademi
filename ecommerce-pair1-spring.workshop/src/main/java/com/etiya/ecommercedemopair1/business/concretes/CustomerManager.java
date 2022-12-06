@@ -1,6 +1,8 @@
 package com.etiya.ecommercedemopair1.business.concretes;
 
 import com.etiya.ecommercedemopair1.business.abstracts.CustomerService;
+import com.etiya.ecommercedemopair1.business.dto.request.customer.AddCustomerRequest;
+import com.etiya.ecommercedemopair1.business.dto.response.customer.GetCustomerResponse;
 import com.etiya.ecommercedemopair1.entities.concretes.Customer;
 import com.etiya.ecommercedemopair1.repository.abstracts.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +39,35 @@ public class CustomerManager implements CustomerService {
     @Override
     public String findEmailByName(String name) {
         return customerRepository.findEmailByName(name);
+    }
+
+    @Override
+    public void addCustomer(AddCustomerRequest addCustomerRequest) {
+        Customer customer=new Customer();
+        customer.setName(addCustomerRequest.getName());
+        customer.setEmail(addCustomerRequest.getEmail());
+        customer.setPhone(addCustomerRequest.getPhone());
+        customer.setBirth_date(addCustomerRequest.getBirth_date());
+        customer.setGender(addCustomerRequest.getGender());
+         customerRepository.save(customer);
+    }
+
+    @Override
+    public GetCustomerResponse addCustomerWithCustomerInfo(AddCustomerRequest addCustomerRequest) {
+        Customer customer=new Customer();
+        customer.setName(addCustomerRequest.getName());
+        customer.setEmail(addCustomerRequest.getEmail());
+        customer.setPhone(addCustomerRequest.getPhone());
+        customer.setBirth_date(addCustomerRequest.getBirth_date());
+        customer.setGender(addCustomerRequest.getGender());
+        customerRepository.save(customer);
+        GetCustomerResponse getCustomerResponse=new GetCustomerResponse();
+        getCustomerResponse.setId(customer.getId());
+        getCustomerResponse.setName(customer.getName());
+        getCustomerResponse.setEmail(customer.getEmail());
+        getCustomerResponse.setPhone(customer.getEmail());
+        getCustomerResponse.setBirth_date(customer.getBirth_date());
+        getCustomerResponse.setGender(customer.getGender());
+        return getCustomerResponse;
     }
 }

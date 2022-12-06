@@ -1,12 +1,14 @@
 package com.etiya.ecommercedemopair1.api.controllers;
 
 import com.etiya.ecommercedemopair1.business.abstracts.CustomerService;
+import com.etiya.ecommercedemopair1.business.dto.request.customer.AddCustomerRequest;
+import com.etiya.ecommercedemopair1.business.dto.response.customer.GetCustomerResponse;
 import com.etiya.ecommercedemopair1.entities.concretes.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,9 +31,20 @@ public class CustomersController {
     {
         return customerService.getCustomerWithGender(gender);
     }
-    @GetMapping("/getEmail")
-    public String findEmailByName(@RequestParam("name") String name)
+    @GetMapping("/getEmail/{name}")
+    public String findEmailByName(@PathVariable String name)
     {
         return customerService.findEmailByName(name);
     }
+    @PostMapping(value="/addCustomer",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addCustomer(@RequestBody AddCustomerRequest addCustomerRequest)
+    {
+        customerService.addCustomer(addCustomerRequest);
+    }
+    @PostMapping("/addCustomerWithCustomerInfo")
+    public ResponseEntity<GetCustomerResponse> addCustomerWithCustomerInfo(@RequestBody AddCustomerRequest addCustomerRequest)
+    {
+        return new ResponseEntity<GetCustomerResponse>(customerService.addCustomerWithCustomerInfo(addCustomerRequest), HttpStatus.CREATED);
+    }
+
 }

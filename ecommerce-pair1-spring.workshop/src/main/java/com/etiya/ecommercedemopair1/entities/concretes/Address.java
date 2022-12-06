@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 
 @Data
@@ -14,21 +16,20 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name="addresses")
-public class Address {
+public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
 
     @Column(name="postalcode")
-    private int postalcode;
+    private int postalCode;
 
     @Column(name="street")
     private String street;
 
     @Column(name="title")
     private String title;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="user_id")
     @JsonBackReference
